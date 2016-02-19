@@ -1,0 +1,24 @@
+# This is to download freertos source code
+
+RTOS_VERSION = 8.2.3
+
+.PHONY: freertos
+
+UNZIP = unzip -q -o
+
+RTOS_SOURCE_ZIP = $(FREERTOS_SOURCE_ZIP_$(RTOS_VERSION))
+RTOS_SOURCE_DIR = $(FREERTOS_SOURCE_DIR_$(RTOS_VERSION))
+RTOS_SOURCE_DIR_FREERTOS = $(RTOS_SOURCE_DIR)/FreeRTOS
+
+FREERTOS_SOURCE_ZIP_8.2.3 = FreeRTOSV8.2.3.zip
+FREERTOS_SOURCE_DIR_8.2.3 = FreeRTOSV8.2.3
+
+freertos:  $(RTOS_SOURCE_DIR)/.dir
+	ln -snf $(RTOS_SOURCE_DIR_FREERTOS) FreeRTOS
+
+$(RTOS_SOURCE_DIR)/.dir: $(RTOS_SOURCE_ZIP)
+	$(UNZIP) $^
+
+FreeRTOSV8.2.3.zip:
+	wget --content-disposition "http://downloads.sourceforge.net/project/freertos/FreeRTOS/V8.2.3/FreeRTOSV8.2.3.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffreertos%2F&ts=1455869562&use_mirror=netix"
+
