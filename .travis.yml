@@ -13,6 +13,9 @@ addons:
             - unzip
             - gcc
             - wget
+            - libtool
+            - git
+            - gcc-multilib
 
 script:
     # Get FreeRTOS source
