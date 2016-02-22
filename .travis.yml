@@ -1,0 +1,24 @@
+language: c
+
+sudo: false
+
+env:
+
+cache:
+
+addons:
+    apt:
+        packages:
+            - make
+            - unzip
+            - gcc
+            - wget
+            - libtool
+            - git
+            - gcc-multilib
+
+script:
+    # Get FreeRTOS source
+    - make -f Makefile.tools
+    # Compile all example
+    - make -f Makefile.examples

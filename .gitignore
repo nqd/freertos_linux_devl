@@ -48,8 +48,9 @@ Makefile.local
 .ycm_extra_conf.pyc
 
 # FreeRTOS
-FreeRTOS*/
-FreeRTOS*
+FreeRTOS
+FreeRTOSV8.2.3/
+FreeRTOSV8.2.3.zip
 
 # Binary file
 *.out
