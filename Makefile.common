@@ -6,6 +6,7 @@ verbose = 0
 
 # SRCROOT should always be the current directory
 SRCROOT         = $(TREEROOT)/FreeRTOS
+POSIXPORT_ROOT	= $(TREEROOT)/posix_port
 
 # .o directory
 ODIR            = .obj
@@ -21,10 +22,10 @@ VPATH	        += $(SRCROOT)/Source/portable/GCC/POSIX
 VPATH           += $(SRCROOT)/Demo/Common/Full
 VPATH           += $(SRCROOT)/Demo/Common/Minimal
 
-VPATH 			+= $(TREEROOT)/Source/portable/GCC/POSIX
-VPATH			+= $(TREEROOT)/POSIX/FileIO
-VPATH			+= $(TREEROOT)/POSIX/ParTest
-VPATH			+= $(TREEROOT)/POSIX
+VPATH 			+= $(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
+VPATH			+= $(POSIXPORT_ROOT)/POSIX/FileIO
+VPATH			+= $(POSIXPORT_ROOT)/POSIX/ParTest
+VPATH			+= $(POSIXPORT_ROOT)/POSIX
 
 # FreeRTOS Objects
 C_FILES			+= croutine.c
@@ -63,15 +64,15 @@ C_FILES			+= fileIO.c
 C_FILES			+= ParTest.c
 
 # Main Object
-C_FILES			+= main.c
+C_FILES			+= $(PROJECT_SRC)
 
 # Include Paths
 INCLUDES        += -I$(SRCROOT)/Source/include
 INCLUDES        += -I$(SRCROOT)/Source/portable/GCC/POSIX/
 INCLUDES        += -I$(SRCROOT)/Demo/Common/include
 
-INCLUDES        += -I$(TREEROOT)/Source/portable/GCC/POSIX
-INCLUDES        += -I$(TREEROOT)/POSIX
+INCLUDES        += -I$(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
+INCLUDES        += -I$(POSIXPORT_ROOT)/POSIX
 
 # Generate OBJS names
 OBJS = $(patsubst %.c,%.o,$(C_FILES))
