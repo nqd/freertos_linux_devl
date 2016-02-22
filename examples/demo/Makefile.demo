@@ -1,0 +1,13 @@
+SRCROOT = $(TREEROOT)/FreeRTOS
+
+# Demo source path
+VPATH   += $(SRCROOT)/Demo/Common/Full
+VPATH   += $(SRCROOT)/Demo/Common/Minimal
+
+# Demo include path
+INCLUDES	+= -I$(SRCROOT)/Demo/Common/include
+
+# Minimal Demo Objects
+C_FILES	+= blocktim.c countsem.c crflash.c crhook.c GenQTest.c QPeek.c recmutex.c
+# Full Demo Objects
+C_FILES	+= BlockQ.c death.c dynamic.c events.c flop.c integer.c PollQ.c print.c semtest.c

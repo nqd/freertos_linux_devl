@@ -15,64 +15,34 @@ ODIR            = .obj
 PROJECT			?= main
 PROJECT_BIN		= $(PROJECT).out
 
-# Source VPATHS
-VPATH           += $(SRCROOT)/Source
-VPATH	        += $(SRCROOT)/Source/portable/MemMang
-VPATH	        += $(SRCROOT)/Source/portable/GCC/POSIX
-VPATH           += $(SRCROOT)/Demo/Common/Full
-VPATH           += $(SRCROOT)/Demo/Common/Minimal
+# Source paths
+FREERTOS_DIR	+= $(SRCROOT)/Source
+FREERTOS_DIR	+= $(SRCROOT)/Source/portable/MemMang
+FREERTOS_DIR	+= $(SRCROOT)/Source/portable/GCC/POSIX
 
-VPATH 			+= $(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
-VPATH			+= $(POSIXPORT_ROOT)/POSIX/FileIO
-VPATH			+= $(POSIXPORT_ROOT)/POSIX/ParTest
-VPATH			+= $(POSIXPORT_ROOT)/POSIX
+INCLUDES	+= -I$(SRCROOT)/Source/include
+INCLUDES	+= -I$(SRCROOT)/Source/portable/GCC/POSIX/
 
-# FreeRTOS Objects
-C_FILES			+= croutine.c
-C_FILES			+= event_groups.c
-C_FILES			+= list.c
-C_FILES			+= queue.c
-C_FILES			+= tasks.c
-C_FILES			+= timers.c
+# Porting paths
+POSIX_PORT_DIR	+= $(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
+POSIX_PORT_DIR	+= $(POSIXPORT_ROOT)/POSIX/FileIO
+POSIX_PORT_DIR	+= $(POSIXPORT_ROOT)/POSIX/ParTest
+POSIX_PORT_DIR	+= $(POSIXPORT_ROOT)/POSIX
 
-# portable Objects
-C_FILES			+= heap_3.c
-C_FILES			+= port.c
+INCLUDES	+= -I$(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
+INCLUDES	+= -I$(POSIXPORT_ROOT)/POSIX
 
-# Minimal Demo Objects
-C_FILES			+= blocktim.c
-C_FILES			+= countsem.c
-C_FILES			+= crflash.c
-C_FILES			+= crhook.c
-C_FILES			+= GenQTest.c
-C_FILES			+= QPeek.c
-C_FILES			+= recmutex.c
+# All paths
+VPATH		+= $(FREERTOS_DIR) $(POSIX_PORT_DIR)
 
-# Full Demo Objects
-C_FILES			+= BlockQ.c
-C_FILES			+= death.c
-C_FILES			+= dynamic.c
-C_FILES			+= events.c
-C_FILES			+= flop.c
-C_FILES			+= integer.c
-C_FILES			+= PollQ.c
-C_FILES			+= print.c
-C_FILES			+= semtest.c
-
-# IO objects
-C_FILES			+= fileIO.c
-C_FILES			+= ParTest.c
-
-# Main Object
+# project object
 C_FILES			+= $(PROJECT_SRC)
-
-# Include Paths
-INCLUDES        += -I$(SRCROOT)/Source/include
-INCLUDES        += -I$(SRCROOT)/Source/portable/GCC/POSIX/
-INCLUDES        += -I$(SRCROOT)/Demo/Common/include
-
-INCLUDES        += -I$(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
-INCLUDES        += -I$(POSIXPORT_ROOT)/POSIX
+# IO objects
+C_FILES			+= fileIO.c ParTest.c
+# FreeRTOS Objects
+C_FILES			+= croutine.c event_groups.c list.c queue.c tasks.c timers.c
+# portable Objects
+C_FILES			+= heap_3.c port.c
 
 # Generate OBJS names
 OBJS = $(patsubst %.c,%.o,$(C_FILES))
@@ -104,7 +74,7 @@ CFLAGS += -m32
 CFLAGS += -DDEBUG=1
 CFLAGS += -g -pthread -DUSE_STDIO=1 -D__GCC_POSIX__=1
 
-# MAX_NUMBER_OF_TASKS = max pthreads used in the POSIX port. 
+# MAX_NUMBER_OF_TASKS = max pthreads used in the POSIX port.
 # Default value is 64 (_POSIX_THREAD_THREADS_MAX), the minimum number required by POSIX.
 CFLAGS += -DMAX_NUMBER_OF_TASKS=300
 
@@ -124,24 +94,21 @@ setup:
 # Fix to place .o files in ODIR
 _OBJS = $(patsubst %,$(ODIR)/%,$(OBJS))
 
-$(ODIR)/%.o: %.c
-# If verbose, print gcc execution, else hide
+# If verbose, print gcc execution
 ifeq ($(verbose),1)
-	@echo ">> Compiling $<"
-	$(CC) $(CFLAGS) -c -o $@ $<
+Q :=
+vecho := @true
 else
-	@echo ">> Compiling $(notdir $<)"
-	@$(CC) $(CFLAGS) -c -o $@ $<
+Q := @
+vecho := @echo
 endif
+
+$(ODIR)/%.o: %.c
+	$(vecho) "CC -c -o $@ $<"
+	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
 
 $(PROJECT_BIN): $(_OBJS)
-	@echo ">> Linking $@..."
-ifeq ($(verbose),1)
-	$(CC) $(CFLAGS) $^ $(LINKFLAGS) $(LIBS) -o $@
-else
-	@$(CC) $(CFLAGS) $^ $(LINKFLAGS) $(LIBS) -o $@
-endif
-
+	$(Q)$(CC) $(CFLAGS) $^ $(LINKFLAGS) $(LIBS) -o $@
 	@echo "-------------------------"
 	@echo "BUILD COMPLETE: $@"
 	@echo "-------------------------"
