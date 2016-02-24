@@ -27,7 +27,7 @@ LWIP_SOURCE_DIR_1.4.1 = lwip-1.4.1
 LWIP_CONTRIB_SOURCE_ZIP_1.4.1 = contrib-1.4.1.zip
 LWIP_CONTRIB_SOURCE_DIR_1.4.1 = contrib-1.4.1
 
-all: lwip
+all: lwip freertos
 
 freertos:  $(RTOS_SOURCE_DIR)/.dir
 	ln -snf $(RTOS_SOURCE_DIR_FREERTOS) FreeRTOS
