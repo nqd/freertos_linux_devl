@@ -83,10 +83,10 @@ CFLAGS += $(INCLUDES) $(CWARNS) -O2
 ######## Makefile targets ########
 
 # Rules
-.PHONY : all
+.PHONY : all setup clean
+
 all: setup $(PROJECT_BIN)
 
-.PHONY : setup
 setup:
 # Make obj directory
 	@mkdir -p $(ODIR)
@@ -113,7 +113,6 @@ $(PROJECT_BIN): $(_OBJS)
 	@echo "BUILD COMPLETE: $@"
 	@echo "-------------------------"
 
-.PHONY : clean
 clean:
 	@-rm -rf $(ODIR) $(PROJECT_BIN)
 	@echo "--------------"

@@ -47,10 +47,18 @@ Makefile.local
 .ycm_extra_conf.py
 .ycm_extra_conf.pyc
 
+# zip file
+*.zip
+
 # FreeRTOS
 FreeRTOS
-FreeRTOSV8.2.3/
-FreeRTOSV8.2.3.zip
+FreeRTOSV*/
+
+# lwip
+lwip-*/
+lwip
+contrib-*/
+lwip-contrib
 
 # Binary file
 *.out
