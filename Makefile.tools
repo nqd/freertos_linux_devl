@@ -1,9 +1,8 @@
 # This is to download freertos source code
 
 RTOS_VERSION = 8.2.3
-LWIP_VERSION = 1.4.1
 
-.PHONY: freertos lwip
+.PHONY: freertos
 
 UNZIP = unzip -q -o
 
@@ -15,19 +14,7 @@ RTOS_SOURCE_DIR_FREERTOS = $(RTOS_SOURCE_DIR)/FreeRTOS
 FREERTOS_SOURCE_ZIP_8.2.3 = FreeRTOSV8.2.3.zip
 FREERTOS_SOURCE_DIR_8.2.3 = FreeRTOSV8.2.3
 
-# LwIP and Contrib code
-LWIP_SOURCE_ZIP = $(LWIP_SOURCE_ZIP_$(LWIP_VERSION))
-LWIP_SOURCE_DIR = $(LWIP_SOURCE_DIR_$(LWIP_VERSION))
-
-LWIP_CONTRIB_SOURCE_ZIP = $(LWIP_CONTRIB_SOURCE_ZIP_$(LWIP_VERSION))
-LWIP_CONTRIB_SOURCE_DIR = $(LWIP_CONTRIB_SOURCE_DIR_$(LWIP_VERSION))
-
-LWIP_SOURCE_ZIP_1.4.1 = lwip-1.4.1.zip
-LWIP_SOURCE_DIR_1.4.1 = lwip-1.4.1
-LWIP_CONTRIB_SOURCE_ZIP_1.4.1 = contrib-1.4.1.zip
-LWIP_CONTRIB_SOURCE_DIR_1.4.1 = contrib-1.4.1
-
-all: lwip freertos
+all: freertos
 
 freertos:  $(RTOS_SOURCE_DIR)/.dir
 	ln -snf $(RTOS_SOURCE_DIR_FREERTOS) FreeRTOS
@@ -35,21 +22,6 @@ freertos:  $(RTOS_SOURCE_DIR)/.dir
 $(RTOS_SOURCE_DIR)/.dir: $(RTOS_SOURCE_ZIP)
 	$(UNZIP) $^
 
-lwip: $(LWIP_SOURCE_DIR)/.dir $(LWIP_CONTRIB_SOURCE_DIR)/.dir
-	ln -snf $(LWIP_SOURCE_DIR) lwip
-	ln -snf $(LWIP_CONTRIB_SOURCE_DIR) lwip-contrib
-
-$(LWIP_SOURCE_DIR)/.dir: $(LWIP_SOURCE_ZIP)
-	$(UNZIP) $^
-
-$(LWIP_CONTRIB_SOURCE_DIR)/.dir: $(LWIP_CONTRIB_SOURCE_ZIP)
-	$(UNZIP) $^
-
 FreeRTOSV8.2.3.zip:
 	wget --content-disposition "http://downloads.sourceforge.net/project/freertos/FreeRTOS/V8.2.3/FreeRTOSV8.2.3.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffreertos%2F&ts=1455869562&use_mirror=netix"
 
-lwip-1.4.1.zip:
-	wget --content-disposition "http://download.savannah.gnu.org/releases/lwip/lwip-1.4.1.zip" -O lwip-1.4.1.zip
-
-contrib-1.4.1.zip:
-	wget --content-disposition "http://download.savannah.gnu.org/releases/lwip/contrib-1.4.1.zip" -O contrib-1.4.1.zip

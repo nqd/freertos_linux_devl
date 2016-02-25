@@ -54,11 +54,5 @@ Makefile.local
 FreeRTOS
 FreeRTOSV*/
 
-# lwip
-lwip-*/
-lwip
-contrib-*/
-lwip-contrib
-
 # Binary file
 *.out
