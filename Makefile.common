@@ -44,6 +44,9 @@ C_FILES			+= croutine.c event_groups.c list.c queue.c tasks.c timers.c
 # portable Objects
 C_FILES			+= heap_3.c port.c
 
+# minimal/full demo
+include $(TREEROOT)/Makefile.demo
+
 # Generate OBJS names
 OBJS = $(patsubst %.c,%.o,$(C_FILES))
 
