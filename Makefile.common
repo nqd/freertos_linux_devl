@@ -32,20 +32,21 @@ POSIX_PORT_DIR	+= $(POSIXPORT_ROOT)/POSIX
 INCLUDES	+= -I$(POSIXPORT_ROOT)/Source/portable/GCC/POSIX
 INCLUDES	+= -I$(POSIXPORT_ROOT)/POSIX
 
+# fileIO header
+INCLUDES	+= -I$(SRCROOT)/Demo/Common/include
+
 # All paths
 VPATH		+= $(FREERTOS_DIR) $(POSIX_PORT_DIR)
 
 # project object
 C_FILES			+= $(PROJECT_SRC)
 # IO objects
-C_FILES			+= fileIO.c ParTest.c
+C_FILES			+= fileIO.c
 # FreeRTOS Objects
 C_FILES			+= croutine.c event_groups.c list.c queue.c tasks.c timers.c
 # portable Objects
-C_FILES			+= heap_3.c port.c
-
-# minimal/full demo
-include $(TREEROOT)/Makefile.demo
+C_FILES			+= heap_3.c
+C_FILES			+= port.c
 
 # Generate OBJS names
 OBJS = $(patsubst %.c,%.o,$(C_FILES))

@@ -98,6 +98,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* FreeRTOS kernel */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "croutine.h"

@@ -11,3 +11,5 @@ INCLUDES	+= -I$(SRCROOT)/Demo/Common/include
 C_FILES	+= blocktim.c countsem.c crflash.c crhook.c GenQTest.c QPeek.c recmutex.c
 # Full Demo Objects
 C_FILES	+= BlockQ.c death.c dynamic.c events.c flop.c integer.c PollQ.c print.c semtest.c
+# Par test
+C_FILES += ParTest.c
